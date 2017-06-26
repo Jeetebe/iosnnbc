@@ -12,6 +12,10 @@
 		FAF6776C1F015999007B74F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAF6776A1F015999007B74F0 /* Main.storyboard */; };
 		FAF6776E1F015999007B74F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAF6776D1F015999007B74F0 /* Assets.xcassets */; };
 		FAF677711F015999007B74F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAF6776F1F015999007B74F0 /* LaunchScreen.storyboard */; };
+		FAF677791F015AAB007B74F0 /* Mycell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF677781F015AAB007B74F0 /* Mycell.swift */; };
+		FAF6777C1F015C77007B74F0 /* DesignButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF6777A1F015C77007B74F0 /* DesignButton.swift */; };
+		FAF6777D1F015C77007B74F0 /* DesignTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF6777B1F015C77007B74F0 /* DesignTextField.swift */; };
+		FAF6777F1F015CCB007B74F0 /* DesignLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF6777E1F015CCB007B74F0 /* DesignLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		FAF6776D1F015999007B74F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAF677701F015999007B74F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAF677721F015999007B74F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAF677781F015AAB007B74F0 /* Mycell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mycell.swift; sourceTree = "<group>"; };
+		FAF6777A1F015C77007B74F0 /* DesignButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignButton.swift; sourceTree = "<group>"; };
+		FAF6777B1F015C77007B74F0 /* DesignTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignTextField.swift; sourceTree = "<group>"; };
+		FAF6777E1F015CCB007B74F0 /* DesignLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +64,14 @@
 			children = (
 				FAF677661F015999007B74F0 /* AppDelegate.swift */,
 				FAF677681F015999007B74F0 /* ViewController.swift */,
+				FAF6777A1F015C77007B74F0 /* DesignButton.swift */,
+				FAF6777B1F015C77007B74F0 /* DesignTextField.swift */,
 				FAF6776A1F015999007B74F0 /* Main.storyboard */,
 				FAF6776D1F015999007B74F0 /* Assets.xcassets */,
 				FAF6776F1F015999007B74F0 /* LaunchScreen.storyboard */,
 				FAF677721F015999007B74F0 /* Info.plist */,
+				FAF677781F015AAB007B74F0 /* Mycell.swift */,
+				FAF6777E1F015CCB007B74F0 /* DesignLabel.swift */,
 			);
 			path = nghenhacbatchu;
 			sourceTree = "<group>";
@@ -136,8 +148,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAF6777F1F015CCB007B74F0 /* DesignLabel.swift in Sources */,
+				FAF6777D1F015C77007B74F0 /* DesignTextField.swift in Sources */,
 				FAF677691F015999007B74F0 /* ViewController.swift in Sources */,
 				FAF677671F015999007B74F0 /* AppDelegate.swift in Sources */,
+				FAF677791F015AAB007B74F0 /* Mycell.swift in Sources */,
+				FAF6777C1F015C77007B74F0 /* DesignButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
