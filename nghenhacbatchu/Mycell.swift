@@ -10,6 +10,8 @@ import Foundation
 import  UIKit
 
 class  Mycell: UICollectionViewCell{
-    
-    @IBOutlet weak var lb2: UILabel!
+
+    @IBOutlet weak var lb: UILabel!
 }
+
+

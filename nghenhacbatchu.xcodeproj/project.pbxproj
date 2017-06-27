@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FAD6F9B71F028D99002AAAB3 /* Mycell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */; };
 		FAF677671F015999007B74F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF677661F015999007B74F0 /* AppDelegate.swift */; };
 		FAF677691F015999007B74F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF677681F015999007B74F0 /* ViewController.swift */; };
 		FAF6776C1F015999007B74F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAF6776A1F015999007B74F0 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mycell1.swift; sourceTree = "<group>"; };
 		FAF677631F015999007B74F0 /* nghenhacbatchu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nghenhacbatchu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAF677661F015999007B74F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAF677681F015999007B74F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				FAF677721F015999007B74F0 /* Info.plist */,
 				FAF677781F015AAB007B74F0 /* Mycell.swift */,
 				FAF6777E1F015CCB007B74F0 /* DesignLabel.swift */,
+				FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */,
 			);
 			path = nghenhacbatchu;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 				FAF677691F015999007B74F0 /* ViewController.swift in Sources */,
 				FAF677671F015999007B74F0 /* AppDelegate.swift in Sources */,
 				FAF677791F015AAB007B74F0 /* Mycell.swift in Sources */,
+				FAD6F9B71F028D99002AAAB3 /* Mycell1.swift in Sources */,
 				FAF6777C1F015C77007B74F0 /* DesignButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +321,7 @@
 				FAF677771F015999007B74F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
