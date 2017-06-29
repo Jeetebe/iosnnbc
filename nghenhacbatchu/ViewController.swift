@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import  GoogleMobileAds
+import AVFoundation
 
 extension Array {
     mutating func shuffle () {
@@ -17,25 +19,122 @@ extension Array {
         }
     }
 }
-class ViewController: UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, CAAnimationDelegate, UICollectionViewDelegateFlowLayout,AVAudioPlayerDelegate {
     
-    let songname:String="TROTYEU"
+    var songname:String="TROTYEU"
+    //tonecode":"601502000000000135","tonename":"DE GIO CUON DI","singer":"PHAN DINH TUNG"
+    let currsong = SongObj(tonecode: "601785000000001388", tonename: "DE GIO CUON DI", singername: "PHAN DINH TUNG")
+    
     var characters:[String]=[]
     var traloi:[String]=[]
     var traloiInt:[Int]=[]
     var lvisible:[Bool]=[]
 
+    @IBOutlet weak var disk: UIImageView!
+    @IBOutlet weak var bannerView: GADBannerView!
+    @IBOutlet weak var btnplay: UIButton!
     
     @IBOutlet weak var lbkqua: UILabel!
     
+    var isRotating = false
+    var shouldStopRotating = false
+    
+    var audioPlayer:AVAudioPlayer! = nil
+
+    
+    var isplaying:Bool=false
+    
+    @IBAction func btnplay_click(_ sender: Any) {
+        if (!audioPlayer.isPlaying)
+        
+        {
+            self.disk.rotate360Degrees(completionDelegate: self)
+            self.isRotating = true
+            btnplay.setImage(#imageLiteral(resourceName: "ic_pause_circle_filled_48pt"), for: .normal)
+            
+            playAudio()
+        }
+        else
+        {
+             self.shouldStopRotating = true
+            btnplay.setImage(#imageLiteral(resourceName: "ic_play_circle_filled_48pt"), for: .normal)
+            audioPlayer.pause()
+
+        }
+        
+    }
+    func prepareAudio()
+    {
+        //setCurrentAudioPath()
+        do {
+            //keep alive audio at background
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        } catch _ {
+        }
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch _ {
+        }
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        
+        let soundUrl: String = "http://45.121.26.141/w/colorring/al/601/514/0/0000/0004/738.mp3"
+        
+        do {
+            let fileURL = NSURL(string:soundUrl)
+            let soundData = NSData(contentsOf:fileURL! as URL)
+            self.audioPlayer = try AVAudioPlayer(data: soundData! as Data)
+            audioPlayer.prepareToPlay()
+            audioPlayer.volume = 1.0
+            audioPlayer.delegate = self
+            //audioLength = audioPlayer.duration
+//            playerProgressSlider.maximumValue = CFloat(audioPlayer.duration)
+//            playerProgressSlider.minimumValue = 0.0
+//            playerProgressSlider.value = 0.0
+            //audioPlayer.play()
+            
+            
+            //progressTimerLabel.text = "00:00"
+            
+            
+        } catch {
+            print("Error getting the audio file")
+        }
+    }
+    func  playAudio(){
+        audioPlayer.play()
+        //startTimer()
+    }
 
     @IBOutlet weak var collv1songname: UICollectionView!
     @IBOutlet weak var collv: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        repare(songname: songname.replacingOccurrences(of: " ", with: ""))
         
+        songname=(currsong?.tonename.replacingOccurrences(of: " ", with: ""))!
+        repare(songname: songname)
+    
+        prepareAudio()
+        
+        var c2=fileExists(soundUrl: "http://45.121.26.141/w/colorring/al/601/514/0/0000/0004/738.mp3")
+        print("c2\(c2)")
+ 
+        var c1=fileExists(soundUrl: "http://45.121.26.141/w/colorring/al/502/0/0000/0000/135.mp3")
+        print("c1\(c1)")
+        
+        var kqu=getvalidURL(song: currsong!)
+        print("hople: \(kqu)")
+        
+        
+        
+        
+        //ads
+        //bannerView.adSize=kGADAdSizeSmartBannerPortrait
+        print("Google Mobile Ads SDK version: \(GADRequest.sdkVersion())")
+        bannerView.adUnitID = "ca-app-pub-8623108209004118/3364165189"
+        
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
     }
 
     override func didReceiveMemoryWarning() {
@@ -124,7 +223,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             //check kqua
             let strdapan=traloi.flatMap({$0}).joined()
             print("dapan:\(strdapan)")
-             print("songname:\(songname)")
+             print("songname:\(currsong?.tonename)")
             if (strdapan==songname)
             {
                 lbkqua.text="dung"
@@ -137,7 +236,18 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
 
     }
     
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if self.shouldStopRotating == false {
+            self.disk.rotate360Degrees(completionDelegate: self)
+        } else {
+            self.reset()
+        }
+    }
     
+    func reset() {
+        self.isRotating = false
+        self.shouldStopRotating = false
+    }
     
     
     func repare(songname:String) -> Void {
@@ -208,6 +318,52 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         
         return randomString
     }
+    
+    func fileExists(soundUrl : String!) -> Bool {
+        var b:Bool=true
+        do {
+            let fileURL = NSURL(string:soundUrl)
+            let soundData = NSData(contentsOf:fileURL! as URL)
+            if (soundData==nil)
+            {
+                print("nil")
+                b = false
+            }
+            else
+            {
+                print("not nil")
+                b = true
+            }
+//            try self.audioPlayer =  AVAudioPlayer(data: soundData! as Data)
+//            audioPlayer.prepareToPlay()
+//            audioPlayer.volume = 1.0
+//            audioPlayer.delegate = self
+                  }
+        catch {
+            print("Error getting the audio file")
+                    b = false
+        }
+        return b
+    }
+    
+    func getvalidURL(song:SongObj) -> String {
+        var kq:String=""
+        let str:String = util.convert(song: song)
+        print("convert:\(str)")
+        for char in "abcdefghijklmnopqrstuvwxyz".characters {
+            print(char)
+            kq="http://45.121.26.141/"+String(char)+"/colorring/al/"+str+".mp3"
+            print("kqu \(kq)")
+            if (fileExists(soundUrl:kq))
+            {
+                return kq
+            }
+            
+            
+        }
+        return "ko tim thay"
+    }
+
 
 }
 
