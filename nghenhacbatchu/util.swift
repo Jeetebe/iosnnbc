@@ -66,24 +66,7 @@ class util
         return false
     }
     
-    static func getvalidURL(song:SongObj) -> String {
-        var kq:String=""
-        let str:String = convert(song: song)
-        print("convert:\(str)")
-        for char in "abcdefghijklmnopqrstuvwxyz".characters {
-            print(char)
-            kq="http://45.121.26.141/"+String(char)+"/colorring/al/"+str+".mp3"
-            print("kqu \(kq)")
-            if (verifyUrl(urlString: kq))
-            {
-                return kq
-            }
-
-            
-        }
-        return "ko tim thay"
-    }
-    static func fileExists(urlString : String!) -> Bool {
+       static func fileExists(urlString : String!) -> Bool {
 
         var b:Bool = true
         Alamofire.request(urlString).responseString{

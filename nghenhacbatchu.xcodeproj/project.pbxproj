@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		571E4B3603946B3DD5C48BA8 /* Pods_nghenhacbatchu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802D2933A0E6C400B4A7F317 /* Pods_nghenhacbatchu.framework */; };
 		FA1C07A31F052AD9003AFE2C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1C07A21F052AD9003AFE2C /* GoogleService-Info.plist */; };
-		FA1C07A61F052F4F003AFE2C /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C07A41F052F4F003AFE2C /* Timer.swift */; };
 		FA1C07A71F052F4F003AFE2C /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C07A51F052F4F003AFE2C /* UIViewExtensions.swift */; };
 		FA1C07A91F053E43003AFE2C /* SongObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C07A81F053E43003AFE2C /* SongObj.swift */; };
 		FA1C07AB1F054092003AFE2C /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C07AA1F054092003AFE2C /* util.swift */; };
+		FA6E025A1F06918C00A4E4F2 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6E02591F06918B00A4E4F2 /* KDCircularProgress.swift */; };
 		FAD6F9B71F028D99002AAAB3 /* Mycell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */; };
+		FAE644771F07DDCB00910963 /* introViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE644761F07DDCB00910963 /* introViewController.swift */; };
+		FAE644791F07DE3A00910963 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE644781F07DE3A00910963 /* ImageCollectionViewCell.swift */; };
+		FAE6447B1F07E2ED00910963 /* AlbumObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE6447A1F07E2ED00910963 /* AlbumObj.swift */; };
 		FAF677671F015999007B74F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF677661F015999007B74F0 /* AppDelegate.swift */; };
 		FAF677691F015999007B74F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF677681F015999007B74F0 /* ViewController.swift */; };
 		FAF6776C1F015999007B74F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAF6776A1F015999007B74F0 /* Main.storyboard */; };
@@ -30,11 +33,14 @@
 		3EB1DA6C44BE660F306A1D40 /* Pods-nghenhacbatchu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nghenhacbatchu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nghenhacbatchu/Pods-nghenhacbatchu.debug.xcconfig"; sourceTree = "<group>"; };
 		802D2933A0E6C400B4A7F317 /* Pods_nghenhacbatchu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nghenhacbatchu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1C07A21F052AD9003AFE2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		FA1C07A41F052F4F003AFE2C /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		FA1C07A51F052F4F003AFE2C /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		FA1C07A81F053E43003AFE2C /* SongObj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongObj.swift; sourceTree = "<group>"; };
 		FA1C07AA1F054092003AFE2C /* util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
+		FA6E02591F06918B00A4E4F2 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mycell1.swift; sourceTree = "<group>"; };
+		FAE644761F07DDCB00910963 /* introViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = introViewController.swift; sourceTree = "<group>"; };
+		FAE644781F07DE3A00910963 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		FAE6447A1F07E2ED00910963 /* AlbumObj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumObj.swift; sourceTree = "<group>"; };
 		FAF677631F015999007B74F0 /* nghenhacbatchu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nghenhacbatchu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAF677661F015999007B74F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAF677681F015999007B74F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,17 +109,20 @@
 				FAF6777A1F015C77007B74F0 /* DesignButton.swift */,
 				FAF6777B1F015C77007B74F0 /* DesignTextField.swift */,
 				FA1C07A21F052AD9003AFE2C /* GoogleService-Info.plist */,
+				FAE644781F07DE3A00910963 /* ImageCollectionViewCell.swift */,
 				FAF6776A1F015999007B74F0 /* Main.storyboard */,
+				FAE644761F07DDCB00910963 /* introViewController.swift */,
 				FAF6776D1F015999007B74F0 /* Assets.xcassets */,
 				FAF6776F1F015999007B74F0 /* LaunchScreen.storyboard */,
 				FAF677721F015999007B74F0 /* Info.plist */,
+				FA6E02591F06918B00A4E4F2 /* KDCircularProgress.swift */,
 				FAF677781F015AAB007B74F0 /* Mycell.swift */,
 				FAF6777E1F015CCB007B74F0 /* DesignLabel.swift */,
 				FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */,
-				FA1C07A41F052F4F003AFE2C /* Timer.swift */,
 				FA1C07A51F052F4F003AFE2C /* UIViewExtensions.swift */,
 				FA1C07A81F053E43003AFE2C /* SongObj.swift */,
 				FA1C07AA1F054092003AFE2C /* util.swift */,
+				FAE6447A1F07E2ED00910963 /* AlbumObj.swift */,
 			);
 			path = nghenhacbatchu;
 			sourceTree = "<group>";
@@ -243,17 +252,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA6E025A1F06918C00A4E4F2 /* KDCircularProgress.swift in Sources */,
 				FAF6777F1F015CCB007B74F0 /* DesignLabel.swift in Sources */,
+				FAE644791F07DE3A00910963 /* ImageCollectionViewCell.swift in Sources */,
 				FAF6777D1F015C77007B74F0 /* DesignTextField.swift in Sources */,
 				FAF677691F015999007B74F0 /* ViewController.swift in Sources */,
 				FAF677671F015999007B74F0 /* AppDelegate.swift in Sources */,
 				FAF677791F015AAB007B74F0 /* Mycell.swift in Sources */,
 				FA1C07AB1F054092003AFE2C /* util.swift in Sources */,
 				FAD6F9B71F028D99002AAAB3 /* Mycell1.swift in Sources */,
+				FAE6447B1F07E2ED00910963 /* AlbumObj.swift in Sources */,
 				FA1C07A91F053E43003AFE2C /* SongObj.swift in Sources */,
 				FAF6777C1F015C77007B74F0 /* DesignButton.swift in Sources */,
 				FA1C07A71F052F4F003AFE2C /* UIViewExtensions.swift in Sources */,
-				FA1C07A61F052F4F003AFE2C /* Timer.swift in Sources */,
+				FAE644771F07DDCB00910963 /* introViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

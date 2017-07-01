@@ -9,6 +9,10 @@
 import UIKit
 import  GoogleMobileAds
 import AVFoundation
+//import KDCircularProgress
+import Alamofire
+import PopupDialog
+import MediaPlayer
 
 extension Array {
     mutating func shuffle () {
@@ -19,29 +23,135 @@ extension Array {
         }
     }
 }
-class ViewController: UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, CAAnimationDelegate, UICollectionViewDelegateFlowLayout,AVAudioPlayerDelegate {
+class ViewController: UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, CAAnimationDelegate, UICollectionViewDelegateFlowLayout,AVAudioPlayerDelegate, GADRewardBasedVideoAdDelegate {
+   @IBOutlet weak var progress: KDCircularProgress!
     
     var songname:String="TROTYEU"
     //tonecode":"601502000000000135","tonename":"DE GIO CUON DI","singer":"PHAN DINH TUNG"
-    let currsong = SongObj(tonecode: "601785000000001388", tonename: "DE GIO CUON DI", singername: "PHAN DINH TUNG")
+    var currsong = SongObj(tonecode: "601785000000001388", tonename: "DE GIO CUON DI", singername: "PHAN DINH TUNG")
     
     var characters:[String]=[]
     var traloi:[String]=[]
     var traloiInt:[Int]=[]
     var lvisible:[Bool]=[]
+    
+    var list=[SongObj]()
+    var currInt=0;
+    var num = 0
+    var coin=10
+    var point=0
+    
+    /// The reward-based video ad.
+    var rewardBasedVideo: GADRewardBasedVideoAd?
+    
+    /// Is an ad being loaded.
+    var adRequestInProgress = false
 
+
+    @IBOutlet weak var playerProgressSlider: UISlider!
+
+    @IBOutlet weak var lbcoin: UILabel!
     @IBOutlet weak var disk: UIImageView!
     @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var btnplay: UIButton!
+    //var progress: KDCircularProgress!
     
-    @IBOutlet weak var lbkqua: UILabel!
+    @IBOutlet weak var lbpint: UILabel!
+
     
     var isRotating = false
     var shouldStopRotating = false
     
-    var audioPlayer:AVAudioPlayer! = nil
+    var timer:Timer!
+     var audioLength = 0.0
 
+    @IBAction func back_click(_ sender: Any) {
+        
+        if (audioPlayer.isPlaying)
+        {
+            audioPlayer.stop()
+        }
+        
+         show_ads()
+        self.dismiss(animated: true, completion: nil)
+        
+       
+    }
     
+    var audioPlayer:AVAudioPlayer! = nil
+    @IBAction func help_click(_ sender: Any) {
+        let len=songname.lengthOfBytes(using: .ascii)-1
+        traloi.removeAll()
+        traloiInt.removeAll()
+        for j in 0...len{
+            var start = songname.index(songname.startIndex, offsetBy: j)
+            var end = songname.index(songname.startIndex, offsetBy: j+1)
+            var range = start..<end
+            let s1=songname.substring(with: range)
+            traloi.append(s1)
+
+            let i=characters.index(of: s1)!
+            //print("i:\(i)")
+            traloiInt.append(i)
+            lvisible[i]=false
+            
+            collv.reloadData()
+            collv1songname.reloadData()
+            collv.isUserInteractionEnabled = false
+            collv1songname.isUserInteractionEnabled = false
+            
+            show_ads()
+        }
+    }
+
+    func show_ads() -> Void {
+        
+        if rewardBasedVideo?.isReady == true {
+            rewardBasedVideo?.present(fromRootViewController: self)
+        } else {
+//            UIAlertView(title: "Reward based video not ready",
+//                        message: "The reward based video didn't finish loading or failed to load",
+//                        delegate: self,
+//                        cancelButtonTitle: "Drat").show()
+        }
+
+    }
+    @IBAction func next_click(_ sender: Any) {
+        playnext()
+    }
+    @IBAction func info_click(_ sender: Any) {
+        let len=traloi.count
+        //let dice1 = arc4random_uniform(UInt32(len));
+        print("len:\(len)")
+        
+        var start = songname.index(songname.startIndex, offsetBy: len)
+        var end = songname.index(songname.startIndex, offsetBy: len+1)
+        var range = start..<end
+        let s1=songname.substring(with: range)
+        traloi.append(s1)
+        let i=characters.index(of: s1)!
+        //print("i:\(i)")
+        traloiInt.append(i)
+        lvisible[i]=false
+        
+        collv.reloadData()
+        collv1songname.reloadData()
+        
+        
+        if (coin>0)
+        {
+            coin = coin - 1
+            lbcoin.text = String(coin)
+        }
+        else
+        {
+            //self.show_popup()
+            show_ads()
+            coin = coin + 10
+            lbcoin.text = String(coin)
+        }
+    }
+
     var isplaying:Bool=false
     
     @IBAction func btnplay_click(_ sender: Any) {
@@ -66,43 +176,74 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
     func prepareAudio()
     {
         //setCurrentAudioPath()
-        do {
-            //keep alive audio at background
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-        } catch _ {
+        var kqu=getvalidURL(song: currsong!)
+        print("hople: \(kqu)")
+        if (kqu == "notfound")
+        {
+            playnext()
+
         }
-        do {
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch _ {
+        else
+        {
+            do {
+                //keep alive audio at background
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            } catch _ {
+            }
+            do {
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch _ {
+            }
+            UIApplication.shared.beginReceivingRemoteControlEvents()
+            
+            //let soundUrl: String = "http://45.121.26.141/w/colorring/al/601/514/0/0000/0004/738.mp3"
+            let soundUrl: String = kqu
+            
+            do {
+                let fileURL = NSURL(string:soundUrl)
+                let soundData = NSData(contentsOf:fileURL! as URL)
+                self.audioPlayer = try AVAudioPlayer(data: soundData! as Data)
+                audioPlayer.prepareToPlay()
+                audioPlayer.volume = 1.0
+                audioPlayer.delegate = self
+                
+//                 let item = AVPlayerItem(url: fileURL as! URL)
+//                NotificationCenter.default.addObserver(self, selector: Selector("playerDidFinishPlaying:"), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item)
+//
+                audioPlayer.delegate = self
+                
+                audioLength = audioPlayer.duration
+                            playerProgressSlider.maximumValue = CFloat(audioPlayer.duration)
+                            playerProgressSlider.minimumValue = 0.0
+                            playerProgressSlider.value = 0.0
+                //audioPlayer.play()
+                
+                
+                //progressTimerLabel.text = "00:00"
+                
+                
+            } catch {
+                print("Error getting the audio file")
+            }
+            
         }
-        UIApplication.shared.beginReceivingRemoteControlEvents()
+
         
-        let soundUrl: String = "http://45.121.26.141/w/colorring/al/601/514/0/0000/0004/738.mp3"
-        
-        do {
-            let fileURL = NSURL(string:soundUrl)
-            let soundData = NSData(contentsOf:fileURL! as URL)
-            self.audioPlayer = try AVAudioPlayer(data: soundData! as Data)
-            audioPlayer.prepareToPlay()
-            audioPlayer.volume = 1.0
-            audioPlayer.delegate = self
-            //audioLength = audioPlayer.duration
-//            playerProgressSlider.maximumValue = CFloat(audioPlayer.duration)
-//            playerProgressSlider.minimumValue = 0.0
-//            playerProgressSlider.value = 0.0
-            //audioPlayer.play()
-            
-            
-            //progressTimerLabel.text = "00:00"
-            
-            
-        } catch {
-            print("Error getting the audio file")
-        }
     }
     func  playAudio(){
         audioPlayer.play()
-        //startTimer()
+        startTimer()
+    }
+//    func playerDidFinishPlaying(note: NSNotification) {
+//        // Your code here
+//        print("playing finish")
+//        playnext()
+//    }
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        // ...
+        print("playing finish")
+        playnext()
+
     }
 
     @IBOutlet weak var collv1songname: UICollectionView!
@@ -111,32 +252,115 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        songname=(currsong?.tonename.replacingOccurrences(of: " ", with: ""))!
-        repare(songname: songname)
-    
-        prepareAudio()
+        alamofireGetLog()
         
-        var c2=fileExists(soundUrl: "http://45.121.26.141/w/colorring/al/601/514/0/0000/0004/738.mp3")
-        print("c2\(c2)")
- 
-        var c1=fileExists(soundUrl: "http://45.121.26.141/w/colorring/al/502/0/0000/0000/135.mp3")
-        print("c1\(c1)")
-        
-        var kqu=getvalidURL(song: currsong!)
-        print("hople: \(kqu)")
-        
-        
-        
-        
-        //ads
-        //bannerView.adSize=kGADAdSizeSmartBannerPortrait
-        print("Google Mobile Ads SDK version: \(GADRequest.sdkVersion())")
-        bannerView.adUnitID = "ca-app-pub-8623108209004118/3364165189"
-        
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
-    }
+        self.disk.rotate360Degrees(completionDelegate: self)
+        self.isRotating = true
+        btnplay.setImage(#imageLiteral(resourceName: "ic_pause_circle_filled_48pt"), for: .normal)
 
+//        progress.angle = Double(360)
+//        progress.animate(fromAngle: 0, toAngle: 360, duration: 5) { completed in
+//            if completed {
+//                print("animation stopped, completed")
+//            } else {
+//                print("animation stopped, was interrupted")
+//            }
+//        }
+// 
+       
+        
+        rewardBasedVideo = GADRewardBasedVideoAd.sharedInstance()
+        rewardBasedVideo?.delegate = self
+        
+        if !adRequestInProgress && rewardBasedVideo?.isReady == false {
+            rewardBasedVideo?.load(GADRequest(),
+                                   withAdUnitID: "ca-app-pub-8623108209004118/1717478389")
+            adRequestInProgress = true
+        }
+
+        //ads
+//        bannerView.adSize=kGADAdSizeSmartBannerPortrait
+//        print("Google Mobile Ads SDK version: \(GADRequest.sdkVersion())")
+//        bannerView.adUnitID = "ca-app-pub-8623108209004118/3364165189"
+//        bannerView.rootViewController = self
+//        bannerView.load(GADRequest())
+    }
+    func  playnext() -> Void {
+         self.num=18;
+        traloiInt.removeAll()
+        traloi.removeAll()
+        lvisible.removeAll()
+        collv1songname.isUserInteractionEnabled = true
+        collv.isUserInteractionEnabled = true
+        
+        currsong = list[currInt]
+        songname=(currsong?.tonename.replacingOccurrences(of: " ", with: ""))!
+        print("song:\(songname)")
+        
+        //songname=(currsong?.tonename.replacingOccurrences(of: " ", with: ""))!
+        repare(songname: songname)
+        
+        prepareAudio()
+        playAudio()
+        
+       
+        currInt += 1
+        
+    }
+    func show_congrate() -> Void {
+        // Prepare the popup assets
+        let title = "Chúc mừng bạn"
+        let message = ""
+        let image = UIImage(named: "congra")
+        
+        // Create the dialog
+        let popup = PopupDialog(title: title, message: message, image: image)
+        
+        // Create buttons
+        let buttonOne = CancelButton(title: "Ok") {
+            //print("You canceled the car dialog.")
+            self.playnext()
+        }
+        
+       
+        
+        // Add buttons to dialog
+        // Alternatively, you can use popup.addButton(buttonOne)
+        // to add a single button
+        popup.addButtons([buttonOne])
+        
+        // Present dialog
+        self.present(popup, animated: true, completion: nil)
+    }
+    func  show_playVideo() -> Void {
+        let title = "Xem video"
+        let message = "This is the message section of the popup dialog default view"
+        
+        // Create the dialog
+        let popup = PopupDialog(title: title, message: message, buttonAlignment: .horizontal, transitionStyle: .zoomIn, gestureDismissal: true) {
+            print("Completed")
+        }
+        
+        // Create first button
+        let buttonOne = CancelButton(title: "CANCEL") {
+            //self.label.text = "You canceled the default dialog"
+        }
+        
+        // Create second button
+        let buttonTwo = DefaultButton(title: "OK") {
+            //self.label.text = "You ok'd the default dialog"
+        }
+        
+        // Add buttons to dialog
+        popup.addButtons([buttonOne, buttonTwo])
+        
+        // Present dialog
+        self.present(popup, animated: true, completion: nil)
+        
+        
+        
+          }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -146,7 +370,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         // Set the number of items in your collection view.
         if (collectionView==self.collv)
         {
-        return 18
+        return num
         }
         else
         {
@@ -160,13 +384,17 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             // Do any custom modifications you your cell, referencing the outlets you defined in the Custom cell file.
             cell.backgroundColor = UIColor.white
             cell.lb.text = characters[indexPath.item]
+            cell.backgroundColor = UIColor .clear
             if (lvisible[indexPath.row])
             {
-                cell.lb.isHidden=false
+                //cell.lb.isHidden=false
+                cell.isHidden = false
+                
             }
             else
             {
-                cell.lb.isHidden=true
+                //cell.lb.isHidden=true
+                cell.isHidden = true
             }
             return cell
         }
@@ -183,6 +411,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             }
             
             cell.lbsongname.text = str
+            cell.backgroundColor = UIColor .clear
             return cell
         }
         
@@ -226,11 +455,16 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
              print("songname:\(currsong?.tonename)")
             if (strdapan==songname)
             {
-                lbkqua.text="dung"
+                               show_congrate()
+                point += 1
+                coin += 1
+                lbpint.text = String(point)
+                lbcoin.text = String(coin)
+                
             }
             else
             {
-                lbkqua.text="sai"
+                
             }
         }
 
@@ -262,6 +496,8 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             {
                 lvisible.append(true)
         }
+        collv1songname.reloadData()
+        collv.reloadData()
     
     }
     
@@ -351,9 +587,12 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         let str:String = util.convert(song: song)
         print("convert:\(str)")
         for char in "abcdefghijklmnopqrstuvwxyz".characters {
-            print(char)
+            //print(char)
             kq="http://45.121.26.141/"+String(char)+"/colorring/al/"+str+".mp3"
-            print("kqu \(kq)")
+            //String url="http://45.121.26.141/"+alphabet+"/colorring/al/"+path+".mp3";
+
+            
+            //print("kqu \(kq)")
             if (fileExists(soundUrl:kq))
             {
                 return kq
@@ -361,7 +600,149 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             
             
         }
-        return "ko tim thay"
+        return "notfound"
+    }
+    
+    func alamofireGetLog() {
+        let todoEndpoint: String = "http://123.30.100.126:8081/Restapi/rest/Musicquiz/get5song?level=1"
+        Alamofire.request(todoEndpoint)
+            
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    // got an error in getting the data, need to handle it
+                    print(response.result.error!)
+                    //completionHandler(.failure(response.result.error!))
+                    return
+                }
+                
+                // make sure we got JSON and it's an array of dictionaries
+                guard let json = response.result.value as? [[String: AnyObject]] else {
+                    print("didn't get todo objects as JSON from API")
+                    //                    completionHandler(.failure(BackendError.objectSerialization(reason: "Did not get JSON array in response")))
+                    return
+                }
+                
+                // turn each item in JSON in to Todo object
+                var todos:[SongObj] = []
+                for element in json {
+                    if let todoResult = SongObj(json: element) {
+                        todos.append(todoResult)
+                        self.list.append(todoResult)
+                    }
+                }
+                print("out:\(self.list.count)")
+               
+               
+                 self.playnext()
+               
+                
+        }
+    }
+    func startTimer(){
+        if timer == nil {
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ViewController.update(_:)), userInfo: nil,repeats: true)
+            timer.fire()
+        }
+    }
+    
+    func stopTimer(){
+        timer.invalidate()
+        
+    }
+    func newAngle() -> Double {
+        return Double(360 * (playerProgressSlider.value / playerProgressSlider.maximumValue))
+    }
+    
+    func update(_ timer: Timer){
+        if !audioPlayer.isPlaying{
+            return
+        }
+        let time = calculateTimeFromNSTimeInterval(audioPlayer.currentTime)
+        //progressTimerLabel.text  = "\(time.minute):\(time.second)"
+        playerProgressSlider.value = CFloat(audioPlayer.currentTime)
+        UserDefaults.standard.set(playerProgressSlider.value , forKey: "playerProgressSliderValue")
+        
+        
+        progress.angle=Double(newAngle())
+        
+    }
+    
+    func retrievePlayerProgressSliderValue(){
+        let playerProgressSliderValue =  UserDefaults.standard.float(forKey: "playerProgressSliderValue")
+        if playerProgressSliderValue != 0 {
+            playerProgressSlider.value  = playerProgressSliderValue
+            audioPlayer.currentTime = TimeInterval(playerProgressSliderValue)
+            
+            let time = calculateTimeFromNSTimeInterval(audioPlayer.currentTime)
+            //progressTimerLabel.text  = "\(time.minute):\(time.second)"
+            playerProgressSlider.value = CFloat(audioPlayer.currentTime)
+            
+        }else{
+            playerProgressSlider.value = 0.0
+            audioPlayer.currentTime = 0.0
+            //progressTimerLabel.text = "00:00:00"
+        }
+    }
+    //This returns song length
+    func calculateTimeFromNSTimeInterval(_ duration:TimeInterval) ->(minute:String, second:String){
+        // let hour_   = abs(Int(duration)/3600)
+        let minute_ = abs(Int((duration/60).truncatingRemainder(dividingBy: 60)))
+        let second_ = abs(Int(duration.truncatingRemainder(dividingBy: 60)))
+        
+        // var hour = hour_ > 9 ? "\(hour_)" : "0\(hour_)"
+        let minute = minute_ > 9 ? "\(minute_)" : "0\(minute_)"
+        let second = second_ > 9 ? "\(second_)" : "0\(second_)"
+        return (minute,second)
+    }
+    
+    
+    func calculateSongLength(){
+        let time = calculateTimeFromNSTimeInterval(audioLength)
+        //totalLengthOfAudio = "\(time.minute):\(time.second)"
+    }
+
+
+    
+    // MARK: GADRewardBasedVideoAdDelegate implementation
+    
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
+                            didFailToLoadWithError error: Error) {
+        adRequestInProgress = false
+        print("Reward based video ad failed to load: \(error.localizedDescription)")
+    }
+    
+    func rewardBasedVideoAdDidReceive(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        adRequestInProgress = false
+        print("Reward based video ad is received.")
+    }
+    
+    func rewardBasedVideoAdDidOpen(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Opened reward based video ad.")
+    }
+    
+    func rewardBasedVideoAdDidStartPlaying(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad started playing.")
+    }
+    
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad is closed.")
+    }
+    
+    func rewardBasedVideoAdWillLeaveApplication(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        print("Reward based video ad will leave application.")
+    }
+    
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
+                            didRewardUserWith reward: GADAdReward) {
+        print("Reward received with currency: \(reward.type), amount \(reward.amount).")
+        //earnCoins(NSInteger(reward.amount))
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
 
 

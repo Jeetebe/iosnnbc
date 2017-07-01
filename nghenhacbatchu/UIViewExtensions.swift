@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIView {
-	func rotate360Degrees(_ duration: CFTimeInterval = 2.5, completionDelegate: CAAnimationDelegate? = nil) {
+	func rotate360Degrees(_ duration: CFTimeInterval = 8, completionDelegate: CAAnimationDelegate? = nil) {
 		let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
 		rotateAnimation.fromValue = 0.0
 		rotateAnimation.toValue = CGFloat(M_PI * 2.0)
