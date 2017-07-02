@@ -8,6 +8,8 @@
 
 import UIKit
 import  Alamofire
+import Social
+
 
 class introViewController: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -15,7 +17,27 @@ class introViewController: UIViewController,UICollectionViewDelegate, UICollecti
     var list=[AlbumObj]()
     var solan=0
 
+    //let link:String="Ứng dụng Lịch cúp điện  http://itunes.apple.com/app/id1232657493"
+    let link:String="Game Nghe nhạc bắt chữ  http://itunes.apple.com/app/id1254978556"
+    
 
+    @IBAction func share_app(_ sender: Any) {
+        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
+            let controller = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+            
+            controller?.setInitialText(link)
+            //controller.addImage(captureScreen())
+            self.present(controller!, animated:true, completion:nil)
+        }
+            
+        else {
+            print("no Facebook account found on device")
+            var alert = UIAlertView(title: "Thông báo", message: "Bạn chưa đăng nhập facebook", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+        }
+        
+
+    }
     @IBOutlet weak var collv: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()

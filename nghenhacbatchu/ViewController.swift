@@ -290,6 +290,10 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
     func update_label() -> Void {
         lbpint.text = String(point)
         lbcoin.text = String(coin)
+        let userDefaults = UserDefaults.standard
+
+        userDefaults.set(coin, forKey: "coin")
+        userDefaults.set(point, forKey: "point")
     }
     func  playnext() -> Void {
         
@@ -298,7 +302,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         alamofireGetLog()
         
         
-        
+         
     }
     func setupgame() -> Void {
         self.num=18;

@@ -13,6 +13,8 @@
 		FA1C07A91F053E43003AFE2C /* SongObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C07A81F053E43003AFE2C /* SongObj.swift */; };
 		FA1C07AB1F054092003AFE2C /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C07AA1F054092003AFE2C /* util.swift */; };
 		FA6E025A1F06918C00A4E4F2 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6E02591F06918B00A4E4F2 /* KDCircularProgress.swift */; };
+		FA8F083C1F08F8DF005245A7 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8F083B1F08F8DF005245A7 /* Social.framework */; };
+		FA8F083E1F091C34005245A7 /* DynamicCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8F083D1F091C34005245A7 /* DynamicCollectionView.swift */; };
 		FAD6F9B71F028D99002AAAB3 /* Mycell1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */; };
 		FAE644771F07DDCB00910963 /* introViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE644761F07DDCB00910963 /* introViewController.swift */; };
 		FAE644791F07DE3A00910963 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE644781F07DE3A00910963 /* ImageCollectionViewCell.swift */; };
@@ -37,6 +39,8 @@
 		FA1C07A81F053E43003AFE2C /* SongObj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongObj.swift; sourceTree = "<group>"; };
 		FA1C07AA1F054092003AFE2C /* util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
 		FA6E02591F06918B00A4E4F2 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
+		FA8F083B1F08F8DF005245A7 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		FA8F083D1F091C34005245A7 /* DynamicCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicCollectionView.swift; sourceTree = "<group>"; };
 		FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mycell1.swift; sourceTree = "<group>"; };
 		FAE644761F07DDCB00910963 /* introViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = introViewController.swift; sourceTree = "<group>"; };
 		FAE644781F07DE3A00910963 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -59,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA8F083C1F08F8DF005245A7 /* Social.framework in Frameworks */,
 				571E4B3603946B3DD5C48BA8 /* Pods_nghenhacbatchu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,6 +83,7 @@
 		A9DEE7E4F0FFEE2A29CD257B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA8F083B1F08F8DF005245A7 /* Social.framework */,
 				802D2933A0E6C400B4A7F317 /* Pods_nghenhacbatchu.framework */,
 			);
 			name = Frameworks;
@@ -123,6 +129,7 @@
 				FA1C07A81F053E43003AFE2C /* SongObj.swift */,
 				FA1C07AA1F054092003AFE2C /* util.swift */,
 				FAE6447A1F07E2ED00910963 /* AlbumObj.swift */,
+				FA8F083D1F091C34005245A7 /* DynamicCollectionView.swift */,
 			);
 			path = nghenhacbatchu;
 			sourceTree = "<group>";
@@ -259,6 +266,7 @@
 				FAF677691F015999007B74F0 /* ViewController.swift in Sources */,
 				FAF677671F015999007B74F0 /* AppDelegate.swift in Sources */,
 				FAF677791F015AAB007B74F0 /* Mycell.swift in Sources */,
+				FA8F083E1F091C34005245A7 /* DynamicCollectionView.swift in Sources */,
 				FA1C07AB1F054092003AFE2C /* util.swift in Sources */,
 				FAD6F9B71F028D99002AAAB3 /* Mycell1.swift in Sources */,
 				FAE6447B1F07E2ED00910963 /* AlbumObj.swift in Sources */,
@@ -392,6 +400,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = AW2QKY6358;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = nghenhacbatchu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtb4.nghenhacbatchu;
@@ -406,6 +418,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = AW2QKY6358;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = nghenhacbatchu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtb4.nghenhacbatchu;
