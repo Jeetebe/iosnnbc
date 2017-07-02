@@ -32,6 +32,8 @@ class introViewController: UIViewController,UICollectionViewDelegate, UICollecti
             device = randomStringWithLength(len: 10) as String
             userDefaults.set(device, forKey: "device")
             userDefaults.set(0, forKey: "solan")
+            userDefaults.set(10, forKey: "coin")
+            userDefaults.set(0, forKey: "point")
             
         }
         else
@@ -45,6 +47,9 @@ class introViewController: UIViewController,UICollectionViewDelegate, UICollecti
         print("solan \(solan)")
         
         alamofirePostLog2server(dev: device!,log: "login_NghenhacbatchuiOS_v1")
+        solan += 1
+        userDefaults.set(solan, forKey: "solan")
+        
 
         // Do any additional setup after loading the view.
     }
@@ -110,6 +115,14 @@ class introViewController: UIViewController,UICollectionViewDelegate, UICollecti
     
             return 4
         }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath as IndexPath) {
+            performSegue(withIdentifier: "showDetail", sender: cell)
+            print("click:\(list[indexPath.row].nameid)")
+        } else {
+            // Error indexPath is not on screen: this should never happen.
+        }
+    }
 
     
     func alamofireGetLog() {
@@ -160,5 +173,27 @@ class introViewController: UIViewController,UICollectionViewDelegate, UICollecti
         
         return randomString
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        var nameid:String="none"
+        
+         if segue.identifier == "showDetail" {
+            if let indexPath = self.collv?.indexPath(for: sender as! UICollectionViewCell) {
+           
+                
+                nameid = list[indexPath.row].nameid
+                print("chon:\(nameid)")
+                            }
+        }
+        else {
+            // Error sender is not a cell or cell is not in collectionView.
+        }
+        let detailVC: ViewController = segue.destination as! ViewController
+        detailVC.type1=nameid
+
+        
+    }
+
   
 }

@@ -33,7 +33,7 @@
                                 </constraints>
                                 <state key="normal" image="btnplay"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="OCG-aU-Gjb"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="segmain" id="OCG-aU-Gjb"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Nw-2x-6hZ">
@@ -58,9 +58,11 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="congra" translatesAutoresizingMaskIntoConstraints="NO" id="GPH-Z1-vgH">
                                                     <rect key="frame" x="0.0" y="0.0" width="127" height="122"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="GPH-Z1-vgH" firstAttribute="top" secondItem="wHr-4l-M8H" secondAttribute="top" id="4GB-Gw-MGx"/>
                                             <constraint firstAttribute="bottom" secondItem="GPH-Z1-vgH" secondAttribute="bottom" id="nja-Ut-S39"/>
@@ -69,11 +71,13 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="GPH-Z1-vgH" id="uGI-Bh-Tat"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" identifier="showDetail" id="wRL-Gm-WFK"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="j1M-SZ-5ab" id="ocz-Lc-sPq"/>
+                                    <outlet property="delegate" destination="j1M-SZ-5ab" id="ari-Uw-Qjd"/>
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OtH-uZ-vpQ">
@@ -106,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nEa-Rm-C6F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-588" y="74.212893553223395"/>
+            <point key="canvasLocation" x="-878" y="87"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -441,4 +445,7 @@
         <image name="simple-background-with-gray-waves_1017-6676" width="352" height="626"/>
         <image name="startscreen" width="900" height="1330"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="OCG-aU-Gjb"/>
+    </inferredMetricsTieBreakers>
 </document>

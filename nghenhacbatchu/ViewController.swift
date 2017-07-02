@@ -40,6 +40,8 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
     var num = 0
     var coin=10
     var point=0
+    var type1:String!
+    var device:String!
     
     /// The reward-based video ad.
     var rewardBasedVideo: GADRewardBasedVideoAd?
@@ -72,13 +74,17 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             audioPlayer.stop()
         }
         
-         show_ads()
+         //show_ads()
+        let userDefaults = UserDefaults.standard
+
+        userDefaults.set(coin, forKey: "coin")
+        userDefaults.set(point, forKey: "point")
+
         self.dismiss(animated: true, completion: nil)
         
        
     }
-    
-    var audioPlayer:AVAudioPlayer! = nil
+       var audioPlayer:AVAudioPlayer! = nil
     @IBAction func help_click(_ sender: Any) {
         let len=songname.lengthOfBytes(using: .ascii)-1
         traloi.removeAll()
@@ -141,15 +147,16 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         if (coin>0)
         {
             coin = coin - 1
-            lbcoin.text = String(coin)
+            //lbcoin.text = String(coin)
         }
         else
         {
             //self.show_popup()
             show_ads()
             coin = coin + 10
-            lbcoin.text = String(coin)
+            //lbcoin.text = String(coin)
         }
+        update_label()
     }
 
     var isplaying:Bool=false
@@ -234,11 +241,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         audioPlayer.play()
         startTimer()
     }
-//    func playerDidFinishPlaying(note: NSNotification) {
-//        // Your code here
-//        print("playing finish")
-//        playnext()
-//    }
+
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         // ...
         print("playing finish")
@@ -252,21 +255,20 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        print("type1:\(type1)")
+        let userDefaults = UserDefaults.standard
+        coin  = userDefaults.integer(forKey: "coin")
+        point  = userDefaults.integer(forKey: "point")
+        device  = userDefaults.string(forKey: "device")
+
         alamofireGetLog()
         
         self.disk.rotate360Degrees(completionDelegate: self)
         self.isRotating = true
         btnplay.setImage(#imageLiteral(resourceName: "ic_pause_circle_filled_48pt"), for: .normal)
 
-//        progress.angle = Double(360)
-//        progress.animate(fromAngle: 0, toAngle: 360, duration: 5) { completed in
-//            if completed {
-//                print("animation stopped, completed")
-//            } else {
-//                print("animation stopped, was interrupted")
-//            }
-//        }
-// 
+        
+        update_label()
        
         
         rewardBasedVideo = GADRewardBasedVideoAd.sharedInstance()
@@ -279,20 +281,32 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         }
 
         //ads
-//        bannerView.adSize=kGADAdSizeSmartBannerPortrait
-//        print("Google Mobile Ads SDK version: \(GADRequest.sdkVersion())")
-//        bannerView.adUnitID = "ca-app-pub-8623108209004118/3364165189"
-//        bannerView.rootViewController = self
-//        bannerView.load(GADRequest())
+        bannerView.adSize=kGADAdSizeSmartBannerPortrait
+        print("Google Mobile Ads SDK version: \(GADRequest.sdkVersion())")
+        bannerView.adUnitID = "ca-app-pub-8623108209004118/3364165189"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+    }
+    func update_label() -> Void {
+        lbpint.text = String(point)
+        lbcoin.text = String(coin)
     }
     func  playnext() -> Void {
-         self.num=18;
+        
+        
+        //?????
+        alamofireGetLog()
+        
+        
+        
+    }
+    func setupgame() -> Void {
+        self.num=18;
         traloiInt.removeAll()
         traloi.removeAll()
         lvisible.removeAll()
-        collv1songname.isUserInteractionEnabled = true
-        collv.isUserInteractionEnabled = true
-        
+       
+        currInt=0 //fix
         currsong = list[currInt]
         songname=(currsong?.tonename.replacingOccurrences(of: " ", with: ""))!
         print("song:\(songname)")
@@ -303,13 +317,17 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         prepareAudio()
         playAudio()
         
-       
-        currInt += 1
         
+        collv1songname.isUserInteractionEnabled = true
+        collv.isUserInteractionEnabled = true
+        collv1songname.reloadData()
+        collv.reloadData()
+        currInt += 1
+
     }
     func show_congrate() -> Void {
         // Prepare the popup assets
-        let title = "Chúc mừng bạn"
+        let title = ""
         let message = ""
         let image = UIImage(named: "congra")
         
@@ -317,7 +335,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         let popup = PopupDialog(title: title, message: message, image: image)
         
         // Create buttons
-        let buttonOne = CancelButton(title: "Ok") {
+        let buttonOne = CancelButton(title: "Chơi tiếp") {
             //print("You canceled the car dialog.")
             self.playnext()
         }
@@ -458,9 +476,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
                                show_congrate()
                 point += 1
                 coin += 1
-                lbpint.text = String(point)
-                lbcoin.text = String(coin)
-                
+                update_label()
             }
             else
             {
@@ -604,7 +620,11 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
     }
     
     func alamofireGetLog() {
-        let todoEndpoint: String = "http://123.30.100.126:8081/Restapi/rest/Musicquiz/get5song?level=1"
+        print("get 1song")
+        //let todoEndpoint: String = "http://123.30.100.126:8081/Restapi/rest/Musicquiz/get5song?level=1"
+        let todoEndpoint: String = "http://123.30.100.126:8081/Restapi/rest/Musicquiz/get1song?level="
+            + String(point) + "&device=" + device + "&chude=" + type1
+        print("url\(todoEndpoint)")
         Alamofire.request(todoEndpoint)
             
             .responseJSON { response in
@@ -624,6 +644,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
                 
                 // turn each item in JSON in to Todo object
                 var todos:[SongObj] = []
+                self.list.removeAll()
                 for element in json {
                     if let todoResult = SongObj(json: element) {
                         todos.append(todoResult)
@@ -633,7 +654,8 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
                 print("out:\(self.list.count)")
                
                
-                 self.playnext()
+                 //self.playnext()
+                self.setupgame()
                
                 
         }
