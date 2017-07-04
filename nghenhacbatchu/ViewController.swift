@@ -86,6 +86,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
     }
        var audioPlayer:AVAudioPlayer! = nil
     @IBAction func help_click(_ sender: Any) {
+        print("help_click")
         let len=songname.lengthOfBytes(using: .ascii)-1
         traloi.removeAll()
         traloiInt.removeAll()
@@ -126,10 +127,15 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         playnext()
     }
     @IBAction func info_click(_ sender: Any) {
-        let len=traloi.count
-        //let dice1 = arc4random_uniform(UInt32(len));
-        print("len:\(len)")
         
+        let len=traloi.count
+            print("len:\(len)")
+        
+        let chieudaisong=songname.lengthOfBytes(using: .ascii)
+        print("chieudaisong:\(chieudaisong)")
+        //if (chieudaisong>=0 && chieudaisong<len)
+        if (len<chieudaisong)
+        {
         var start = songname.index(songname.startIndex, offsetBy: len)
         var end = songname.index(songname.startIndex, offsetBy: len+1)
         var range = start..<end
@@ -157,6 +163,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             //lbcoin.text = String(coin)
         }
         update_label()
+        }
     }
 
     var isplaying:Bool=false
@@ -169,7 +176,8 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             self.isRotating = true
             btnplay.setImage(#imageLiteral(resourceName: "ic_pause_circle_filled_48pt"), for: .normal)
             
-            playAudio()
+            //playAudio()
+            audioPlayer.play()
         }
         else
         {
@@ -223,7 +231,9 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
                             playerProgressSlider.maximumValue = CFloat(audioPlayer.duration)
                             playerProgressSlider.minimumValue = 0.0
                             playerProgressSlider.value = 0.0
-                //audioPlayer.play()
+                audioPlayer.play()
+                
+                startTimer()
                 
                 
                 //progressTimerLabel.text = "00:00"
@@ -237,10 +247,10 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
 
         
     }
-    func  playAudio(){
-        audioPlayer.play()
-        startTimer()
-    }
+//    func  playAudio(){
+//        //audioPlayer.play()
+//        //startTimer()
+//    }
 
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         // ...
@@ -274,11 +284,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         rewardBasedVideo = GADRewardBasedVideoAd.sharedInstance()
         rewardBasedVideo?.delegate = self
         
-        if !adRequestInProgress && rewardBasedVideo?.isReady == false {
-            rewardBasedVideo?.load(GADRequest(),
-                                   withAdUnitID: "ca-app-pub-8623108209004118/1717478389")
-            adRequestInProgress = true
-        }
+       
 
         //ads
         bannerView.adSize=kGADAdSizeSmartBannerPortrait
@@ -319,7 +325,7 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         repare(songname: songname)
         
         prepareAudio()
-        playAudio()
+       
         
         
         collv1songname.isUserInteractionEnabled = true
@@ -327,6 +333,12 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         collv1songname.reloadData()
         collv.reloadData()
         currInt += 1
+        
+        if !adRequestInProgress && rewardBasedVideo?.isReady == false {
+            rewardBasedVideo?.load(GADRequest(),
+                                   withAdUnitID: "ca-app-pub-8623108209004118/1717478389")
+            adRequestInProgress = true
+        }
 
     }
     func show_congrate() -> Void {
