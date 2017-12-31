@@ -23,7 +23,7 @@ extension Array {
         }
     }
 }
-class ViewController: UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, CAAnimationDelegate, UICollectionViewDelegateFlowLayout,AVAudioPlayerDelegate, GADRewardBasedVideoAdDelegate {
+class ViewController: UIViewController , UICollectionViewDataSource, UICollectionViewDelegate, CAAnimationDelegate, UICollectionViewDelegateFlowLayout,AVAudioPlayerDelegate, GADRewardBasedVideoAdDelegate,GADInterstitialDelegate {
    @IBOutlet weak var progress: KDCircularProgress!
     
     var songname:String="TROTYEU"
@@ -48,6 +48,8 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
     
     /// Is an ad being loaded.
     var adRequestInProgress = false
+    
+    var interstitial: GADInterstitial!
 
 
     @IBOutlet weak var playerProgressSlider: UISlider!
@@ -74,13 +76,13 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
             audioPlayer.stop()
         }
         
-         //show_ads()
+         show_ads()
         let userDefaults = UserDefaults.standard
 
         userDefaults.set(coin, forKey: "coin")
         userDefaults.set(point, forKey: "point")
 
-        self.dismiss(animated: true, completion: nil)
+        //self.dismiss(animated: true, completion: nil)
         
        
     }
@@ -113,13 +115,19 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
 
     func show_ads() -> Void {
         
-        if rewardBasedVideo?.isReady == true {
-            rewardBasedVideo?.present(fromRootViewController: self)
+//        if rewardBasedVideo?.isReady == true {
+//            rewardBasedVideo?.present(fromRootViewController: self)
+//        } else {
+////            UIAlertView(title: "Reward based video not ready",
+////                        message: "The reward based video didn't finish loading or failed to load",
+////                        delegate: self,
+////                        cancelButtonTitle: "Drat").show()
+//        }
+        
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
         } else {
-//            UIAlertView(title: "Reward based video not ready",
-//                        message: "The reward based video didn't finish loading or failed to load",
-//                        delegate: self,
-//                        cancelButtonTitle: "Drat").show()
+            print("Ad wasn't ready")
         }
 
     }
@@ -292,6 +300,25 @@ class ViewController: UIViewController , UICollectionViewDataSource, UICollectio
         bannerView.adUnitID = "ca-app-pub-8623108209004118/3364165189"
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
+        
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-8623108209004118/4267318788")
+        let request = GADRequest()
+        interstitial.load(request)
+         interstitial.delegate = self
+        
+        //interstitial = createAndLoadInterstitial()
+        
+    }
+    func createAndLoadInterstitial() -> GADInterstitial {
+//        var interstitial = GADInterstitial(adUnitID: "ca-app-pub-8623108209004118/4267318788")
+//        interstitial.delegate = self as! GADInterstitialDelegate
+//        interstitial.load(GADRequest())
+        return interstitial
+    }
+    
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+       // interstitial = createAndLoadInterstitial()
+        self.dismiss(animated: true, completion: nil)
     }
     func update_label() -> Void {
         lbpint.text = String(point)

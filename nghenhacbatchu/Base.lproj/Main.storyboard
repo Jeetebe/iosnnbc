@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j1M-SZ-5ab">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j1M-SZ-5ab">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVz-SG-ccT">
-                                <rect key="frame" x="157.66666666666669" y="328" width="100.00000000000006" height="100"/>
+                                <rect key="frame" x="157.66666666666666" y="328" width="99.999999999999972" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="P4C-1X-BvZ"/>
                                     <constraint firstAttribute="width" constant="100" id="pYm-ds-Kt9"/>
@@ -270,7 +270,7 @@
                                     <action selector="btnplay_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ite-lZ-JRm"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7d-lO-vaT">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7d-lO-vaT">
                                 <rect key="frame" x="346" y="195" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="Cj3-jY-fDq"/>
@@ -281,7 +281,7 @@
                                     <action selector="info_click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fFg-oU-D6o"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dn0-fR-RNB">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dn0-fR-RNB">
                                 <rect key="frame" x="346" y="252" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="6nw-pK-QVd"/>

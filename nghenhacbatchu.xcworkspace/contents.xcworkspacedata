@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:nghenhacbatchu/../design"
+      name = "design">
+   </Group>
    <FileRef
       location = "group:nghenhacbatchu.xcodeproj">
    </FileRef>

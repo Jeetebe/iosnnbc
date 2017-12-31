@@ -89,6 +89,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FA020A091FF89F9100FD2B35 /* design */ = {
+			isa = PBXGroup;
+			children = (
+				FA020A0A1FF89FAF00FD2B35 /* design */,
+			);
+			name = design;
+			path = ../design;
+			sourceTree = "<group>";
+		};
+		FA020A0A1FF89FAF00FD2B35 /* design */ = {
+			isa = PBXGroup;
+			children = (
+				FAF6777A1F015C77007B74F0 /* DesignButton.swift */,
+				FAF6777E1F015CCB007B74F0 /* DesignLabel.swift */,
+				FAF6777B1F015C77007B74F0 /* DesignTextField.swift */,
+			);
+			name = design;
+			sourceTree = "<group>";
+		};
 		FAF6775A1F015999007B74F0 = {
 			isa = PBXGroup;
 			children = (
@@ -110,10 +129,9 @@
 		FAF677651F015999007B74F0 /* nghenhacbatchu */ = {
 			isa = PBXGroup;
 			children = (
+				FA020A091FF89F9100FD2B35 /* design */,
 				FAF677661F015999007B74F0 /* AppDelegate.swift */,
 				FAF677681F015999007B74F0 /* ViewController.swift */,
-				FAF6777A1F015C77007B74F0 /* DesignButton.swift */,
-				FAF6777B1F015C77007B74F0 /* DesignTextField.swift */,
 				FA1C07A21F052AD9003AFE2C /* GoogleService-Info.plist */,
 				FAE644781F07DE3A00910963 /* ImageCollectionViewCell.swift */,
 				FAF6776A1F015999007B74F0 /* Main.storyboard */,
@@ -123,7 +141,6 @@
 				FAF677721F015999007B74F0 /* Info.plist */,
 				FA6E02591F06918B00A4E4F2 /* KDCircularProgress.swift */,
 				FAF677781F015AAB007B74F0 /* Mycell.swift */,
-				FAF6777E1F015CCB007B74F0 /* DesignLabel.swift */,
 				FAD6F9B61F028D99002AAAB3 /* Mycell1.swift */,
 				FA1C07A51F052F4F003AFE2C /* UIViewExtensions.swift */,
 				FA1C07A81F053E43003AFE2C /* SongObj.swift */,
@@ -405,6 +422,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = nghenhacbatchu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtb4.nghenhacbatchu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -423,6 +441,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = nghenhacbatchu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtb4.nghenhacbatchu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
